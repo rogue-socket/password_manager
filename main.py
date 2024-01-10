@@ -1,7 +1,10 @@
 import tkinter as tk
+from tkinter import messagebox
 import pandas as pd
 from os.path import exists
 import random
+import pyperclip
+
 
 data_temp_dict = {
     "websites": {},
@@ -29,6 +32,9 @@ def random_password():
     random.shuffle(random_password_list)
     for elem in random_password_list:
         random_password_str += elem
+    # Copies the password generated to the clipboard of the system in use
+    pyperclip.copy(random_password_str)
+    
     password_entry.delete(0, 'end')
     password_entry.insert(0, random_password_str)
 
