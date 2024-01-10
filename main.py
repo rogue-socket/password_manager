@@ -39,30 +39,39 @@ def add_password():
     website = website_entry.get()
     username = email_entry.get()
     password = password_entry.get()
-    # Save to file
-    if exists("data.csv"):
-        data_temp = pd.read_csv("data.csv")
-        data_temp_dict = data_temp.to_dict()
+    print(website, username, password)
+    if len(website) == 0 or len(username) == 0 or len(password) == 0:
+        messagebox.showinfo(title="Incomplete Data", message="Please dont leave any of the fields empty")
+    else:
+        # Confirmation Pop Up
+        is_ok = messagebox.askokcancel(title="Confirm Username and Password",
+                                       message=f"Website: {website}\nUsername: {username}\nPassword: {password}")
 
-    data_temp_dict["websites"][len(data_temp_dict["websites"])] = website
-    data_temp_dict["usernames"][len(data_temp_dict["usernames"])] = username
-    data_temp_dict["passwords"][len(data_temp_dict["passwords"])] = password
+        if is_ok:
+            # Save to file
+            if exists("data.csv"):
+                data_temp = pd.read_csv("data.csv")
+                data_temp_dict = data_temp.to_dict()
 
-    data_frame = pd.DataFrame(data_temp_dict)
-    data_frame.to_csv("data.csv", index=False)
+            data_temp_dict["websites"][len(data_temp_dict["websites"])] = website
+            data_temp_dict["usernames"][len(data_temp_dict["usernames"])] = username
+            data_temp_dict["passwords"][len(data_temp_dict["passwords"])] = password
 
-    # Clear the text-boxes
-    website_entry.delete(0, 'end')
-    email_entry.delete(0, 'end')
-    email_entry.insert(0, "yash.testboi@gmail.com")
-    password_entry.delete(0, 'end')
+            data_frame = pd.DataFrame(data_temp_dict)
+            data_frame.to_csv("data.csv", index=False)
 
-    # Clear the dictionary of data
-    data_temp_dict = {
-        "websites": {},
-        "usernames": {},
-        "passwords": {}
-    }
+            # Clear the text-boxes
+            website_entry.delete(0, 'end')
+            email_entry.delete(0, 'end')
+            email_entry.insert(0, "yash.testboi@gmail.com")
+            password_entry.delete(0, 'end')
+
+            # Clear the dictionary of data
+        data_temp_dict = {
+            "websites": {},
+            "usernames": {},
+            "passwords": {}
+        }
 
 
 # ---------------------------- UI SETUP ------------------------------- #
